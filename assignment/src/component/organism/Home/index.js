@@ -173,6 +173,9 @@ const Landing=(props)=>{
             errorMsg['pwdError']="";
             errorMsg['CpwdError']="";
             isValid=true;
+        if(!apiCall){
+            UserCheck()
+          }
         }
         setError(errorMsg)
         return isValid
@@ -182,11 +185,9 @@ const Landing=(props)=>{
     
   const submitbtn=()=>{
       let checkF=FormValid();
-      if(checkF){
+      if(checkF && apiCall){
           console.log(emailCheck,'emailCheck')
-        //   if(!apiCall){
-        //     UserCheck()
-        //   }
+        
           let payload=
             {    
                 "emailid": emailCheck?state.userName:"",
