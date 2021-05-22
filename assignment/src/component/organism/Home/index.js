@@ -148,7 +148,7 @@ const Landing=(props)=>{
       if(userName===""){
         errorMsg['userNameError']="Please enter email id/phone number"
       }else if(emailCheck && !ECheck ){
-            errorMsg['userNameError']="Please enter email id/phone number"
+            errorMsg['userNameError']="Please  enter valid email id/phone number"
         }
        
         else if(!emailCheck && userName.length!==10){

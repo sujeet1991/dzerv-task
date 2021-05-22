@@ -1,5 +1,4 @@
 
-
 const Sequelize = require('sequelize');
 
 let dbhost, dbname, dbuser, dbpass = '';
@@ -14,6 +13,4 @@ const sequelize = new Sequelize(dbname, dbuser, dbpass, {
   dialect: 'mysql'
 });
 
-let connection = sequelize.authenticate();
-console.log(connection,'sequelize connection');
 module.exports = sequelize;
