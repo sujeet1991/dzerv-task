@@ -96,7 +96,7 @@ const Landing=(props)=>{
             }else{
                 let EmailCheck= emailText(value);
                 if(!EmailCheck){
-                    errorMsg['userNameError']="Please enter email id/phone number"
+                    errorMsg['userNameError']="Please enter valid email id/phone number"
                     emailCheck=null;
                 }else{
                     errorMsg['userNameError']="";
