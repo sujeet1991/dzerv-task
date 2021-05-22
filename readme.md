@@ -30,6 +30,6 @@ application will run directly on http://localhost:3000/ if port 3000 is not occu
 
 ------------------ Sample test. ----------------
 
-sample email id - test2@yopmail.com, mobile - 9820098200
+sample email id - test1@yopmail.com, mobile - 9920099200
 
 (Feel free to add more entries in DB)
