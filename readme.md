@@ -1,25 +1,4 @@
-[3:42 PM, 5/22/2021] Ronak Rathod: ------------------ MySQL setup. ---------------- \n
-
-Open your database. Ex. phpmyadmin or any tool which connects mysql. Ensure you have mysql installed. \n
-
-import .sql file in your mysql DB \n
-
------------------- Node application setup. ---------------- \n
-
-move to node-src directory. \n
-
-install npm dependencies using npm install command. \n
-
-make sure above command has installed sequelize or use command "npm install sequelize@5" or above version \n
-
-update the database credentials in node-src/config/database.js file \n
-
-run node application using command "node app.js" \n
-
-once your node application starts running check your terminal or command prompt to check whether DB connected or not. \n
-
------------------- react/redux application setup. -----------…
-[3:50 PM, 5/22/2021] Ronak Rathod: ------------------ MySQL setup. ----------------
+------------------ MySQL setup. ----------------
 
 Open your database. Example: phpmyadmin or any tool which connects mysql. Ensure you have mysql installed.
 
