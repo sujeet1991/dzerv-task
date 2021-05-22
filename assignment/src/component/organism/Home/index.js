@@ -16,6 +16,7 @@ const Landing=(props)=>{
     const [emailCheck,setEmailCheck]=useState(null); // email or phone number bases on true false
     const [userCheck,setUserCheck]=useState(null); // check existing user
     const [msg,setMsg]=useState(''); // api false msg
+    const [apiCall,setApiCall]=useState(false);
     
 
     // form onChange
@@ -43,58 +44,42 @@ const Landing=(props)=>{
        useEffect(()=>{
           
         if(emailCheck!==null ){
-            let {userName}=state;
-            let payload={    
-                "emailid":emailCheck?userName:"",
-                "mobileno": !emailCheck?userName:"",
-                "type": emailCheck?"emailid":"mobileno",
-            }
-            api.userExist(payload).then(res=>{
-                console.log(res,'resData')
-                if(res.success){
-                    setUserCheck(true)
-                    setMsg('')
-                }else{
-                    setUserCheck(false)
-                    setMsg(res.result)
-                    setTimeout(function(){ 
-                        setMsg('')
-                    }, 1000);
-                }
-            }).catch(error=>{
-                console.log(error)
-            })
+            UserCheck();
         }
        },[emailCheck])  
        
     const UserCheck=()=>{
+       
         let {userName}=state;
-            let payload={    
-                "emailid":emailCheck?userName:"",
-                "mobileno": !emailCheck?userName:"",
-                "type": emailCheck?"emailid":"mobileno",
-            }
-            api.userExist(payload).then(res=>{
-                console.log(res,'resData')
-                if(res.success){
-                    setUserCheck(true)
+        let payload={    
+            "emailid":emailCheck?userName:"",
+            "mobileno": !emailCheck?userName:"",
+            "type": emailCheck?"emailid":"mobileno",
+        }
+        api.userExist(payload).then(res=>{
+            console.log(res,'resData')
+            if(res.success){
+                setUserCheck(true)
+                setMsg('');
+                setApiCall(true)
+            }else{
+                setUserCheck(false)
+                setMsg(res.result)
+                setApiCall(false)
+                setTimeout(function(){ 
                     setMsg('')
-                }else{
-                    setUserCheck(false)
-                    setMsg(res.result)
-                    setTimeout(function(){ 
-                        setMsg('')
-                    }, 1000);
-                }
-            }).catch(error=>{
-                console.log(error)
-            })
+                }, 1000);
+            }
+        }).catch(error=>{
+            console.log(error)
+        })
     }   
 
     // blur function   
     const validate=(name,value)=>{
         let type =name;
         let errorMsg={...error};
+        
         if(type==="userName"){
             let emailCheck=null;
             if(value===""){
@@ -159,29 +144,31 @@ const Landing=(props)=>{
     
     let pwdcheck=pwdText(pwd);
     let pwdcheck1=pwdText(Cpwd);
+  
       if(userName===""){
         errorMsg['userNameError']="Please enter email id/phone number"
-      }else if(emailCheck && !ECheck){
+      }else if(emailCheck && !ECheck ){
             errorMsg['userNameError']="Please enter email id/phone number"
         }
        
         else if(!emailCheck && userName.length!==10){
             errorMsg['userNameError']="Please enter email id/phone number"
-        }else if(pwd===""){
+        }else if(pwd==="" && apiCall){
             errorMsg['pwdError']="Please enter password"
-        }else if(!pwdcheck){
+        }else if(!pwdcheck && apiCall){
             errorMsg['pwdError']="Entered password doesn't not match criteria"
         }
-        else if(Cpwd===""){
+        else if(Cpwd==="" && apiCall){
             errorMsg['CpwdError']="Please enter password"
-        }else if(!pwdcheck1){
+        }else if(!pwdcheck1 && apiCall){
             errorMsg['CpwdError']="Entered password doesn't not match criteria"
-        }else if(pwd!==state.pwd){
+        }else if(pwd!==Cpwd && apiCall){
             errorMsg['CpwdError']="Password and confirm password field should be match"   
-        }else if(userName===state.Cpwd){
-            errorMsg['CpwdError']="Entered password doesn't not match criteria"   
+        }else if(userName===state.Cpwd && apiCall){
+            errorMsg['CpwdError']="Entered password does not match criteria"   
         }
         else{
+           
             errorMsg['userNameError']="";
             errorMsg['pwdError']="";
             errorMsg['CpwdError']="";
@@ -196,6 +183,10 @@ const Landing=(props)=>{
   const submitbtn=()=>{
       let checkF=FormValid();
       if(checkF){
+          console.log(emailCheck,'emailCheck')
+        //   if(!apiCall){
+        //     UserCheck()
+        //   }
           let payload=
             {    
                 "emailid": emailCheck?state.userName:"",
@@ -212,10 +203,10 @@ const Landing=(props)=>{
     return <Redirect to="/Detail" />
      // console.log(getStata,'getStata')
   }
-console.log(msg,'MSG')
+console.log(msg,'MSG',emailCheck)
     return(
         <div className="container">  
-            <form id="contact" action="" method="post">
+            <div id="contact">
                 <h3>Login</h3>
                
                 <Input
@@ -250,22 +241,25 @@ console.log(msg,'MSG')
                
                
                
-               <p>   Note:
-                    • Min:1 lowercase and 1 uppercase alphabet
-                    •	Min: 1 number
-                    •	Min: 1 special character
-                    •	8-16 character length
-                    •	Shouldn’t be the same as username
-                    •	Shouldn’t be the same as last password
+               <p className="note_txt">   Note:
+                   <br/>
+                   <ol>
+                    <li>• Min:1 lowercase and 1 uppercase alphabet</li>
+                    <li>• Min: 1 number</li>
+                    <li>• Min: 1 special character</li>
+                    <li>• 8-16 character length</li>
+                    <li>• Shouldn’t be the same as username</li>
+                    <li>• Shouldn’t be the same as last password</li>
+                    </ol>
                     </p>
                 </Fragment> :null}
                 {msg!==""?<div class="alert alert-warning">{msg}</div>:null}
                 
                 <fieldset>
-                 {getState.fStatus?"Please Wait":null}   
+                 {/* {getState.fStatus?"Please Wait":null}    */}
                 <button name="submit" type="button" onClick={submitbtn} id="contact-submit" data-submit="...Sending">Submit</button>
                 </fieldset>
-            </form>
+            </div>
             </div>
     )
 }

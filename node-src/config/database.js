@@ -1,18 +1,3 @@
-// const Sequelize = require('sequelize');
-
-// let dbhost, dbname, dbuser, dbpass = '';
-// dbhost = '65.0.220.199';  
-// dbname = 'dzerve_test';    
-// dbuser = 'root';
-// dbpass = 'DxTech@321';
-
-// const sequelize = new Sequelize(dbname, dbuser, dbpass, {
-//   host: dbhost,
-//   port: 3306,
-//   dialect: 'mysql'
-// });
-
-// module.exports = sequelize;
 
 
 const Sequelize = require('sequelize');
@@ -29,4 +14,6 @@ const sequelize = new Sequelize(dbname, dbuser, dbpass, {
   dialect: 'mysql'
 });
 
+let connection = sequelize.authenticate();
+console.log(connection,'sequelize connection');
 module.exports = sequelize;

@@ -140,3 +140,8 @@ fieldset {
 .errorMsg {
   color: #721c24;
 }
+
+.note_txt {
+  border: 1px solid #ccc;
+  padding: 10px 23px;
+}
